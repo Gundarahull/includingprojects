@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #2874f0; /* Flipkart blue */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #eeeeee; /* Light gray */
+            color: #333; /* Dark gray */
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #333; /* Dark gray */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #2874f0; /* Flipkart blue */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333; /* Dark gray */
+            margin-top: 30px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Dark gray */
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #2874f0; /* Flipkart blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1356dd; /* Darker blue */
+        }
+    </style>
+</head>
+
+<body>
+    <header>GETTING START TO E-WeBSITE</header>
+    <nav>
+        <li><a href="/">HOME</a></li>
+        <li><a href="add">ADD-PRODUCT</a></li>
+        <li><a href="/cart">CART</a></li>
+        <li><a href="/products">ADMIN</a></li>
+        <a href="/categories">category</a>
+        <!-- link lo products/add petta akkada click chesthey aa fetch ayyi adhi renser lo addproduct ki send chestundhi kabbati -->
+    </nav>
+    <h1>HOME PAGE FOR THE WEBSITE</h1>
+    <form method="POST" action="/edit">
+        <!-- nenu submit chesindhi products/add oki velthundhi manam akkada dhanin post method use chesam kadha -->
+        <input type="hidden" name="productId" value="<%= product.id %>">
+        <div>
+            <label for="title">PRODUCT NAME </label>
+            <input type="text" name="title" id="title" value="<%= product.title %>">
+        </div>
+        <div><br><label for="imageurl">IMAGE URL </label>
+            <input type="text" name="imageurl" id="iamgeurl" value="<%= product.imageurl %>">
+        </div>
+        <div>
+            <br><label for="price">PRICE </label>
+            <input type="text" name="price" id="price" value="<%= product.price %>">
+        </div>
+        <div>
+            <br><label for="description">DESCRIPTION </label>
+            <input type="text" name="description" id="description" value="<%= product.description %>">
+        </div>
+        <div>
+            <label for="">SELECT CATEGORY For the Product</label>
+        <select name="categoryId" id="">
+            <option value="">Select Category</option>
+            <% for(let cat of categories){%>
+                <option value="<%= cat.id %>">
+                    <%= cat.id ===product.categoryId ? "selected" : "" %><%= cat.title %></option>   
+            <%}  %>
+        </select>
+
+        </div>
+        <br><button type="submit">EDIT-PRODUCT</button>
+    </form>
+</body>
+
+</html>

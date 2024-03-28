@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approved Enrollments</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            background-color: #f0f2f5; /* Changed background color to a related shade */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            min-height: 100vh;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #005980;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+        }
+        .no-approvals {
+            text-align: center;
+            color: #005980;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand btn btn-primary" href="/pending"
+                >Pending Enrollments</a
+              >
+
+          </nav>
+        <h1>Approved Enrollments</h1>
+        <div class="table-container">
+            <% if (enrolls.length > 0) { %>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>House No</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>District</th>
+                        <th>Postal Code</th>
+                        <th>Gender</th>
+                        <th>Date of Birth</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% enrolls.forEach(function(enroll, index) { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <!-- Serial number -->
+                        <td><%= enroll.name %></td>
+                        <td><%= enroll.age %></td>
+                        <td><%= enroll.houseno %></td>
+                        <td><%= enroll.street %></td>
+                        <td><%= enroll.city %></td>
+                        <td><%= enroll.district %></td>
+                        <td><%= enroll.postalcode %></td>
+                        <td><%= enroll.gender %></td>
+                        <td><%= enroll.dob %></td>
+                        <td><%= enroll.phonenumber %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <p class="no-approvals">No enrollments have been approved yet.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

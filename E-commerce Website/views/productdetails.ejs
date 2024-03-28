@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        div {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <li><a href="/">HOME</a></li>
+        <li><a href="products/add">ADD-PRODUCT</a></li>
+        <li><a href="/cart">CART</a></li>
+        <li><a href="/products">ADMIN</a></li>
+        <a href="/categories">category</a>
+    </nav>
+    <div>
+        <br>
+        <div class="col-md-2">
+            <img src="<%= product.imageurl %>" alt="Product Image">
+        </div>
+        <h1>PRODUCT-NAME: <%= product.title %>
+        </h1>
+
+        <h1>PRODUCT-PRICE: <%= product.price %>
+        </h1>
+        <h1>PRODUCT-DESCRIPTION: <%= product.description %>
+        </h1>
+        <form action="/cart" method="post">
+            <!-- instead of in slash using in inpiy va;ue -->
+            <input type="hidden" name="prouctId" value="<%= product.id %>">
+            <button type="submit">Add TO CART</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

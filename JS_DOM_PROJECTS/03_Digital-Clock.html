@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: lightgreen;
+      padding: 50px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    #banner {
+      margin-bottom: 20px;
+    }
+
+    #clock {
+      font-size: 3em;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container center">
+    <div id="banner">
+      <h1>DIGITAL CLOCK</h1>
+    </div>
+    <div id="clock"></div>
+  </div>
+
+  <!-- Bootstrap JS (Optional, for certain components) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    let clock = document.querySelector("#clock");
+    setInterval(() => {
+      const date = new Date();
+      const time = date.toLocaleTimeString();
+      clock.textContent = time;
+    }, 1000);
+  </script>
+</body>
+</html>

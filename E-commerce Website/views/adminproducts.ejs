@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=pagetitle%></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #2874f0;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product h4 {
+            margin: 0;
+        }
+
+        .product a {
+            text-decoration: none;
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .product a:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn-edit {
+            background-color: #28a745;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .no-products {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <header>GETTING START TO E-WeBSITE</header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">HOME</a>
+            <a class="navbar-brand" href="/products/add">ADD-PRODUCT</a>
+            <a class="navbar-brand" href="/cart">CART</a>
+            <a class="navbar-brand" href="/products">ADMIN</a>
+            <a class="navbar-brand" href="/categories">category</a>
+        </div>
+    </nav><br>
+    <div class="container">
+        <h1 class="text-center">PRODUCTS LIST</h1>
+        <div class="products-container">
+            <% if(products.length){ %>
+            <% for(let product of products){ %>
+            <div class="product">
+                <h4>
+                    NAME: <%= product.title %>
+                    <br>
+                     <div class="col-md-2">
+                        <img src="<%= product.imageurl %>" alt="Product Image">
+                    </div>
+                    <br> Price: <%= product.price %>
+                    <br> Description: <%= product.description %>
+                    <br>Category: <%= product.category.title %>
+                    <br>USER-NAME: <%= product.user.name %>
+                </h4>
+                <a href="/product/edit/<%= product.id %>" class="btn btn-edit">EDIT</a>
+                <form action="/products/delete" method="post">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <button type="submit" class="btn btn-delete">DELETE</button>
+                </form>
+            </div>
+            <% } %>
+            <% } else { %>
+            <div class="no-products">NO PRODUCTS FOR NOW</div>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

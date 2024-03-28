@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense and Income Tracker</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* Add your custom styles here */
+    body {
+      padding-top: 50px;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .table {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <span class="navbar-brand mb-0 h1">Expense and Income Tracker</span>
+  </nav>
+
+  <div class="container">
+    <h2>All Expenses and Incomes</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populate this table with data from the backend -->
+        <tr>
+          <td>2024-02-10</td>
+          <td>Expense</td>
+          <td>$50.00</td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+
+    <h2>View Expenses and Incomes</h2>
+    <div class="btn-group" role="group" aria-label="View Options">
+      <button type="button" class="btn btn-primary">Daily</button>
+      <button type="button" class="btn btn-primary">Weekly</button>
+      <button type="button" class="btn btn-primary">Monthly</button>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <th>01/01/101</th>
+        <th>Food</th>
+        <th>10000</th>
+        <!-- Populate this table with data based on the selected view (daily, weekly, monthly) -->
+      </tbody>
+    </table>
+
+    <button id="downloadButton" class="btn btn-success">Download Data</button>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to download data as text file
+    function downloadText(filename, data) {
+        const blob = new Blob([data], { type: 'text/plain;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    // Function to handle click event on the download button
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        // Extract data from the table and format it as text
+        const tableRows = document.querySelectorAll('table.table-striped tbody tr');
+        let data = 'Date,Type,Amount\n';
+        tableRows.forEach(row => {
+            const rowData = Array.from(row.children).map(cell => cell.textContent).join(',');
+            data += rowData + '\n';
+        });
+        // Trigger download with the filename 'expense_income_data.txt'
+        downloadText('expense_income_data.txt', data);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Sign-up Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('background_image.jpg'); /* Set your background image path here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .signup-form {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        }
+        .signup-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .signup-form button[type="submit"] {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>No Username with this EMAIL</h3>
+        <br>
+        <h3>Please KINDLY Sign-up </h3><br> 
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="signup-form">
+                    <h2>Mentor Sign-up</h2>
+                    <form id="signupForm" action="/signup" method="post">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="useremail">Email:</label>
+                            <input type="email" class="form-control" id="useremail" name="useremail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userID" name="userID" >
+                        </div>                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load last generated ID from cookies or set default
+        var lastGeneratedID = getCookie('lastGeneratedID') || 99;
+    
+        // Automatically generate ID
+        window.addEventListener('DOMContentLoaded', function () {
+            var userIDField = document.getElementById('userID');
+            lastGeneratedID = parseInt(lastGeneratedID) + 1;
+            if (lastGeneratedID > 999) {
+                alert('Cannot generate more IDs.');
+                lastGeneratedID = 999;
+            }
+            // Format the ID with "R24" followed by a three-digit number
+            var formattedID = 'R24' + padNumber(lastGeneratedID, 3);
+            userIDField.value = formattedID;
+        });
+    
+        // Save last generated ID to cookies
+        window.addEventListener('beforeunload', function () {
+            document.cookie = 'lastGeneratedID=' + lastGeneratedID;
+        });
+    
+        // Function to get cookie value by name
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) return match[2];
+        }
+    
+        // Function to pad a number with leading zeros to a specific length
+        function padNumber(num, length) {
+            var str = num.toString();
+            while (str.length < length) {
+                str = '0' + str;
+            }
+            return str;
+        }
+    </script>
+    
+
+</body>
+</html>

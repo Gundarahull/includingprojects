@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pagetitle %></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #2874f0; /* Flipkart blue */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            background-color: #eeeeee; /* Light gray */
+            color: #333; /* Dark gray */
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #333; /* Dark gray */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #2874f0; /* Flipkart blue */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333; /* Dark gray */
+            margin-top: 30px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: #333; /* Dark gray */
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #2874f0; /* Flipkart blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1356dd; /* Darker blue */
+        }
+    </style>
+</head>
+
+<body>
+    <header>GETTING START TO E-WEBSITE</header>
+    <nav>
+        <a href="/">HOME</a>
+        <a href="add">ADD-PRODUCT</a>
+        <a href="/cart">CART</a>
+        <a href="/products">ADMIN</a>
+        <a href="/categories">category</a>
+    </nav>
+    <h1>HOME PAGE FOR THE WEBSITE</h1>
+    <form method="POST" action="add" class="container">
+        <div class="form-group">
+            <label for="title">PRODUCT NAME</label>
+            <input type="text" name="title" id="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="imageurl">IMAGE URL</label>
+            <input type="text" name="imageurl" id="imageurl" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="price">PRICE</label>
+            <input type="text" name="price" id="price" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="description">DESCRIPTION</label>
+            <input type="text" name="description" id="description" class="form-control">
+        </div>
+        <div>
+            <label for="">SELECT CATEGORY For the Product</label>
+        <select name="categoryId" id="">
+            <option value="">Select Category</option>
+            <% for(let cat of categories){%>
+                <option value="<%= cat.id %>"><%= cat.title %></option>   
+            <%}  %>
+        </select>
+
+        </div>
+        
+        
+        <br><button type="submit" class="btn btn-primary">ADD-PRODUCT</button>
+    </form>
+</body>
+
+</html>

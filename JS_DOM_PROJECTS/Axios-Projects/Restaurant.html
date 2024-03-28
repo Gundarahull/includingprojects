@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <title>Restaurant</title>
+</head>
+
+<body>
+    <form action="#" id="addForm" onsubmit="submitform(event)">
+        <h1 class="container">Restaurant</h1>
+
+        <div>
+            <label for="price">Choose price :</label>
+            <input type="number" id="price" placeholder="Enter price"><br>
+        </div>
+        <div>
+            <label for="dish">Choose dish : </label>
+            <input type="text" id="dish" placeholder="description"><br>
+        </div>
+        <div>
+            <label for="table">Choose a Table : </label>
+            <select id="table">
+                <option value="table1">Table 1</option>
+                <option value="table2">Table 2</option>
+                <option value="table3">Table 3</option>
+            </select><br>
+        </div>
+        <div class="form-group container"><input class="btn btn-primary " type="submit" value="Submit"></div>
+    </form>
+    <ul id="Table1">
+        <h3>Table 1</h3>
+    </ul>
+    <ul id="Table2">
+        <h3>Table 2</h3>
+    </ul>
+    <ul id="Table3">
+        <h3>Table 3</h3>
+    </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+    <script>
+        async function submitform(event) {
+            event.preventDefault();
+            const price = document.getElementById("price").value;
+            const dish = document.getElementById("dish").value;
+            const table = document.getElementById("table").value;
+            let myObj = {
+                'price': price,
+                'dish': dish,
+                'table': table
+            }
+            try {
+                const response = await axios.post("https://crudcrud.com/api/825f260e953e4fb78bca60cafd5d5f72/resta", myObj)
+                addItem(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        window.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const response = await axios.get("https://crudcrud.com/api/825f260e953e4fb78bca60cafd5d5f72/resta")
+                for (var i = 0; i < response.data.length; i++) {
+                    addItem(response.data[i]);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        })
+        function addItem(user) {
+            // document.getElementById('price').value = ''
+            // document.getElementById('dish').value = ''
+            // document.getElementById('table').value = ''
+            if (user.table === 'table1') {
+                const parentElem = document.getElementById('Table1')
+                const childElem = `<li id=${user._id}>${user.price} - ${user.dish}
+                                    <button onclick=deleteUser('${user._id}','${user.table}')>delete</button>
+                                    </li>`
+                parentElem.innerHTML = parentElem.innerHTML + childElem;
+            }
+            else if (user.table === 'table2') {
+                const parentElem2 = document.getElementById('Table2')
+                const childElem2 = `<li id=${user._id}>${user.price} - ${user.dish}
+                                    <button onclick=deleteUser('${user._id}','${user.table}')>delete</button>
+                                    </li>`
+                parentElem2.innerHTML = parentElem2.innerHTML + childElem2;
+            }
+            else {
+                const parentElem3 = document.getElementById('Table3')
+                const childElem3 = `<li id=${user._id}>${user.price} - ${user.dish}
+                                    <button onclick=deleteUser('${user._id}','${user.table}')>delete</button>
+                                    </li>`
+                parentElem3.innerHTML = parentElem3.innerHTML + childElem3;
+            }
+        }
+        async function deleteUser(userId, tables) {
+            try {
+                await axios.delete(`https://crudcrud.com/api/825f260e953e4fb78bca60cafd5d5f72/resta/${userId}`)
+                removeItem(userId, tables)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        function removeItem(userId, tables) {
+            const parentElem = document.getElementById('Table1')
+            const parentElem2 = document.getElementById('Table2')
+            const parentElem3 = document.getElementById('Table3')
+            const elem = document.getElementById(userId)
+            if (tables === 'table1') {
+                parentElem.removeChild(elem);
+            }
+            else if (tables === 'table2') {
+                parentElem2.removeChild(elem);
+            }
+            else {
+                parentElem3.removeChild(elem);
+            }
+        }
+    </script>
+</body>
+
+</html>

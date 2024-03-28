@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPENSIVE</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <!-- for the ajax -->
+
+    <style>
+        /* CSS Styles for the Navbar */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #dddace;
+        }
+
+        .special-link {
+            background-color: #1d4163;
+            font-weight: bold;
+        }
+    </style>
+    <!-- rzpayjs -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- //axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+        integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+
+</head>
+
+<body>
+    <header class="bg-primary py-3">
+        <div class="container text-center">
+            <p class="text-light">NA-NA NOT A PREMIUM USER</p>
+            <p class="text-light">Get into premium user to get the DEtails</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="/" class="home-link">HOME</a>
+        <!-- <a href="/about" class="about-link">ABOUT</a> -->
+        <button id="rzp-button1">Pay with Razorpay</button>
+        <a href="/addexpense" class="special-link">GET YOUR EXPENSES</a>
+    </nav>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <form action="/addexpense" method="post">
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" class="form-control" name="amount" id="amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" name="description" id="description">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Choose Category:</label>
+                        <select class="form-control" name="category" id="category">
+                            <option value="food">Food</option>
+                            <option value="petrol">Petrol</option>
+                            <option value="bills">Bills</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+    <!-- RAZORPAY INTO THE PAGE -->
+    <script>
+        axios.post('/order').then((info) => {
+            console.log("rahul");
+            console.log(info);
+            var options = {
+                "key": 'rzp_test_chl1HGz9KIP3i6',
+                "name": "RAHUL Corp",
+                "description": "RAHUL;s PAY",
+                "order_id": info.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "callback_url": 'is-order-complete',
+                "theme": {
+                    "color": "#3399cc"
+                }
+            }
+            //again intiliazing the orderid in it
+            var rzp1 = new Razorpay(options);
+
+            rzp1.on('payment.failed', function (response) {
+                console.log("failes");
+                console.log(response);
+                // Extract the payment ID, order ID, error code, and payment status from the response
+                var paymentId = response.error.metadata.payment_id;
+                var orderId = response.error.metadata.order_id;
+                var errorCode = response.error.code;
+                var paymentStatus = response.error.description;
+
+                // Send the payment ID, order ID, error code, and payment status to the backend
+                axios.post('/payment-failed', {
+                    paymentId: paymentId,
+                    orderId: orderId,
+                    errorCode: errorCode,
+                    paymentStatus: paymentStatus
+                })
+                    .then(function (response) {
+                        console.log('Payment ID, order ID, error code, and payment status sent to the backend:', paymentId, orderId, errorCode, paymentStatus);
+                    })
+                    .catch(function (error) {
+                        console.error('Error sending data to the backend:', error);
+                    });
+            });
+
+            document.getElementById('rzp-button1').onclick = function (e) {
+                rzp1.open();
+                e.preventDefault();
+            }
+        }).catch((error) => {
+                console.log('Error making POST request to /order:', error);
+        });
+    </script>
+</body>
+
+</html>

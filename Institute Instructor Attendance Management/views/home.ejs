@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .monthly-report {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/monthreport" onclick="generateReport()">Monthly Report</a>
+        <a href="/dailyreport">Daily LOGS </a>
+        <a href="/logout" onclick="logout()">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Information about Express.js, Node.js, and Middlewares</h1>
+        <p>
+            Express.js is a web application framework for Node.js, designed for building web applications and APIs. It provides a robust set of features to develop web and mobile applications.
+        </p>
+        <p>
+            Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside of a web browser. It allows developers to use JavaScript to write command-line tools and server-side scripts.
+        </p>
+        <p>
+            Middlewares in Express.js are functions that have access to the request object (req), the response object (res), and the next middleware function in the application's request-response cycle. They can perform tasks such as logging, authentication, error handling, and more.
+        </p>
+        <div class="monthly-report" id="monthly-report">
+            <h2>Monthly Report</h2>
+            <p>Add your monthly report content here...</p>
+            <p id="logout-time"></p> <!-- This will display the logout time -->
+        </div>
+    </div>
+
+    <script>
+        // function generateReport() {
+        //     var monthlyReport = document.getElementById('monthly-report');
+        //     monthlyReport.style.display = 'block';
+        // }
+
+        function logout() {
+            var logoutTime = new Date().toLocaleString();
+            var logoutTimeElement = document.getElementById('logout-time');
+            logoutTimeElement.textContent = 'Logout time: ' + logoutTime;
+            
+            // Set logout time in cookie
+            document.cookie = 'logoutTime=' + logoutTime + '; path=/'; // Set the cookie for the entire domain
+            
+            // You can put your logout logic here, such as redirecting to a logout page or clearing session data.
+            alert('Logout successful!');
+        }
+    </script>
+</body>
+</html>

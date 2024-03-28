@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration form</title>
+    <style>
+        form {
+            border: 1px;
+            padding: 5px;
+            width: 400px;
+            border-radius: 10px;
+            opacity: 10;
+            background-color: blue;
+        }
+        div {
+            padding: 5px;
+            display: grid;
+            place-items: center;
+        }
+        input {
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px;
+            background-color: lightblue;
+        }
+        body {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="body">
+        <form action="#" id="addForm" onsubmit="submitform(event)">
+            <div><label for="username">Name :</label>
+            <input type="text" name="username" id="username" placeholder="Enter name" required><br></div>
+            <div><label for="email">Email :</label>
+            <input type="email" name="email" id="email" placeholder="Enter email" required><br></div>
+            <div><label for="password">Password :</label>
+            <input type="password" name="password" id="password" placeholder="Enter password" required><br></div>
+            <div><input class="btn" type="submit" value="Submit"></div>
+        </form>
+        <ul id="items"></ul>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+    </div>
+    <script>
+        function submitform(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            let myObj = {
+                'username': username,
+                'email': email,
+                'password': password
+            }
+
+            axios.post("https://crudcrud.com/api/0c6a48424b454f90beb8bcb6825ed43b/appoinmentData",myObj)
+                .then((response) => {
+                    addItem(response.data);
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            // let obj = JSON.stringify(myObj);
+            // localStorage.setItem(email,obj)
+            // let objects = JSON.parse(obj)
+            // console.log(objects);
+        }
+        window.addEventListener("DOMContentLoaded",() => {
+            axios.get("https://crudcrud.com/api/0c6a48424b454f90beb8bcb6825ed43b/appoinmentData")
+            .then((response) => {
+                for (var i=0;i<response.data.length;i++){
+                    addItem(response.data[i]);
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+
+        function addItem(user){
+            const parentElem = document.getElementById('items')
+            const childElem = `<li id=${user._id}>${user.username} - ${user.email} - ${user.password}
+                                <button onclick=deleteUser('${user._id}')>delete</button>
+                                <button onclick=editUser('${user.username}','${user.email}','${user.password}','${user._id}')>edit</button>
+                                </li>`
+            parentElem.innerHTML = parentElem.innerHTML + childElem;
+        }
+        function editUser(username,email,password,userId){
+            console.log(username)
+            document.getElementById('username').value = username;
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            deleteUser(userId)
+        }
+        function deleteUser(userId){
+            axios.delete(`https://crudcrud.com/api/0c6a48424b454f90beb8bcb6825ed43b/appoinmentData/${userId}`)
+                .then((response) => {
+                    removeItemFromScreen(userId)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        function removeItemFromScreen(userId){
+            const parentElem = document.getElementById('items')
+            const elem = document.getElementById(userId)
+            parentElem.removeChild(elem);
+            console.log(userId)
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollments Pending Approval</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            padding: 50px 0; /* Added padding to the body */
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #005980;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enrollments Pending Approval</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Serial No</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>House No</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>District</th>
+                    <th>Postal Code</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% enrolls.forEach(function(enroll, index) { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <!-- Serial number -->
+                    <td><%= enroll.name %></td>
+                    <td><%= enroll.age %></td>
+                    <td><%= enroll.houseno %></td>
+                    <td><%= enroll.street %></td>
+                    <td><%= enroll.city %></td>
+                    <td><%= enroll.district %></td>
+                    <td><%= enroll.postalcode %></td>
+                    <td><%= enroll.gender %></td>
+                    <td><%= enroll.dob %></td>
+                    <td><%= enroll.phonenumber %></td>
+                    <td>
+                        <!-- Edit button -->
+                        <a href="/edit/<%= enroll.id %>" class="btn btn-primary btn-action">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <!-- Approve button -->
+                        <a href="/approve/<%= enroll.id %>" class="btn btn-success btn-action">
+                            <i class="fas fa-check"></i> Approve
+                        </a>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

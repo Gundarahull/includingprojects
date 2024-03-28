@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Guessing Game</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: lightgreen;
+        padding: 50px;
+      }
+
+      h2,
+      h3 {
+        text-align: center;
+      }
+
+      form {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      input[type="number"] {
+        width: 200px;
+        margin-right: 10px;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .results {
+        text-align: center;
+      }
+
+      .guesses {
+        font-size: 18px;
+      }
+
+      .lastresult {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Number Guessing Game</h2>
+      <form>
+        <label for="num">Enter Your Guess: </label>
+        <input type="number" id="num" />
+        <button type="submit">Submit</button>
+      </form>
+      <h3>You have only 10 guesses to guess the number</h3>
+      <div class="results">
+        <p>Previous Guess: <span class="guesses"></span></p>
+        <p>Remaining Guess: <span class="lastresult">10</span></p>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS (Optional, for certain components) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      let array = [];
+      let random = Math.floor(Math.random() * 100 + 1);
+      let previous = document.querySelector(".guesses");
+      let lastResult = document.querySelector(".lastresult");
+      const form = document.querySelector("form");
+      let count = 0;
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const input = document.getElementById("num").value;
+        if (input == random) {
+          alert("Congratulations! You guessed it right");
+          location.reload()
+        } else {
+          if (input > random || input < random) {
+            count++;
+            lastResult.textContent = 10 - count;
+            if (count === 10) {
+              setTimeout(() => {
+                previous.innerHTML =
+                  `Your number of guesses are over.The RANDOm Number ${random} ......Please come again.`;
+                setTimeout(() => {
+                  location.reload();
+                }, 3000); 
+              }, 1000); 
+            } else {
+              array.push(input);
+              previous.innerHTML = "";
+              for (const val of array) {
+                previous.appendChild(document.createTextNode(val));
+                previous.appendChild(document.createElement("br"));
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

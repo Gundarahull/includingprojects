@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+</head>
+
+<body>
+    <form action="#" id="addForm" onsubmit="submitform(event)">
+        <h1 class="container">Expense tracker</h1>
+        <div>
+            <label for="amount">Choose expense amount :</label>
+            <input type="number" id="amount" placeholder="Enter amount" required><br>
+        </div>
+        <div>
+            <label for="description">Choose description :</label>
+            <input type="text" id="description" placeholder="description"><br>
+        </div>
+        <div><label for="category">Choose acategory :</label>
+            <select id="category" class="form-control input-lg">
+                <option value="fuel">Fuel</option>
+                <option value="food">Food</option>
+                <option value="electricity">Electricity</option>
+                <option value="movies">Movies</option>
+            </select><br>
+        </div>
+        <div>
+            <input class="btn btn-primary " type="submit" value="Submit">
+        </div>
+    </form>
+
+    <ul id="items"></ul>
+    <script>
+
+        let action = "add"
+
+        function editexpense(event) {
+            
+
+            event.preventDefault();
+            const amount = document.getElementById("amount").value;
+            const description = document.getElementById("description").value;
+            const category = document.getElementById("category").value;
+            let myObj = {
+                'amount': amount,
+                'description': description,
+                'category': category
+            }
+
+            fetch("http://localhost:3031/editexpense/:id")
+
+            let obj = JSON.stringify(myObj);
+            localStorage.setItem(amount, obj)
+            let objects = JSON.parse(obj)
+            console.log(objects);
+            addItem(myObj);
+        }
+
+
+        function submitform(event) {
+            event.preventDefault();
+            const amount = document.getElementById("amount").value;
+            const description = document.getElementById("description").value;
+            const category = document.getElementById("category").value;
+            let myObj = {
+                'amount': amount,
+                'description': description,
+                'category': category
+            }
+            fetch("http://localhost:3031/editexpense")
+            let obj = JSON.stringify(myObj);
+            localStorage.setItem(amount, obj)
+            let objects = JSON.parse(obj)
+            console.log(objects);
+            addItem(myObj);
+        }
+
+
+        function addItem(myObj) {
+            let parentElem = document.getElementById('items')
+            let li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.appendChild(document.createTextNode(myObj.amount));
+            li.appendChild(document.createTextNode(' - '));
+            li.appendChild(document.createTextNode(myObj.description));
+            li.appendChild(document.createTextNode(' - '));
+            li.appendChild(document.createTextNode(myObj.category));
+            li.appendChild(document.createTextNode(' '));
+
+            // deleting 
+
+            let deleteButton = document.createElement('input');
+            deleteButton.type = "button";
+            deleteButton.value = "DELETE";
+
+            deleteButton.onclick = () => {
+                localStorage.removeItem(myObj.amount)
+                let deleted_item = parentElem.removeChild(li)
+                console.log(deleted_item);
+                parentElem.removeChild(li)
+
+            }
+
+            // editing?
+
+            let editButton = document.createElement('input');
+            editButton.type = 'button';
+            editButton.value = 'Edit';
+
+    
+            editButton.onclick = () => {
+                action= `edit#${id}`
+                localStorage.removeItem(myObj.amount)
+                parentElem.removeChild(li);
+                document.getElementById("amount").value = myObj.amount;
+                document.getElementById("description").value = myObj.description;
+                document.getElementById("category").value = myObj.category;
+            }
+            li.appendChild(deleteButton);
+            // li.appendChild(document.createTextNode('         ')); 
+            li.appendChild(editButton);
+            parentElem.appendChild(li);
+        }
+    </script>
+</body>
+
+</html>

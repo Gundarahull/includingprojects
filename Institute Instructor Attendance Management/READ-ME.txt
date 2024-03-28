@@ -1,0 +1,51 @@
+Hi Sir, Good Morning
+
+In these INSTRUCTOR INSTITUTE ATTENDANCE MANGAMENT System assignment
+i Followed MVC PATTERN to look in structure way
+
+//SIGNUP-FORM
+   -First i created the Signup form to fill the usernmae,Useremail and password
+        - in these i generated ID for the Instructor ID using auto increment.
+        - for example when he signup ID created with R24100
+        - after for the new Instructor R24101 like thhis increment of ID
+        - i used the bycrpt to hash the password
+        -stored the values in the database
+
+//LOG-In
+        -in the login, i  used the Instructor Id and Password from the SignUp Form 
+        -and match it with the database values if both are same with the bycrpt comaprison then logged In successfully
+
+         by using the new date and time ,year it will auto generated to the current time and stored in the database
+        else "Invalid Username or Password" displayed on the screen
+        -to authenticate for the individual u with the secret key user used the JWT for these i used the middleware authenticate
+
+        --stored the token in the cookie with the token name
+
+Added the Edge cases like Password doesnt match with no Instructor Id,not provided user email for generate the instructor ID
+
+//Dashboard
+        -after logged in ,the dashboard page will be opened
+        --i added a Dailylogin-daily Logout report and Monthly report and logout 
+        --inserted some information about NODE JS,Express JS, Middleware
+
+//Dailylogin-reports
+        --it shows login time and logout time
+        --and how many hours the instructor works in 
+         and uses the EJS templating engine to render the values onto the frontend
+
+//Monthly-report
+        --when the user clicks on the  monthly report button it opens up the monthly report page
+        --it shows hoe many hours u worked in the entire month after the 30 days
+        -- it will show the next month details of hours
+
+//logout
+        -- for these i used the update function where
+            like this
+             Logs.update({ logouttime: currentTime }, { where: { signupId: req.user.id, logouttime: 'null' } })
+        -- here it will find the record which is  null (logged in) then update the log out time as current time
+
+Used OneToMany releationship between LOGS and USER
+
+
+ Further clarification see the Video.
+ Thank You

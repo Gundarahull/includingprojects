@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesome Theme Changer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: grey;
+      padding: 50px;
+    }
+
+    .canvas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button {
+      cursor: pointer;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      width: 100%; 
+    }
+
+    .button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Awesome Theme Changer</h1>
+    <p class="text-center mt-3">Click on the Color to change the Theme</p>
+    <div class="canvas">
+      <button class="button btn btn-success" id="green">Green</button>
+      <button class="button btn btn-primary" id="blue">Blue</button>
+      <button class="button btn btn-secondary" id="brown">Brown</button>
+      <button class="button btn btn-info" id="aqua">Aqua</button>
+    </div>
+  </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    const buttons = document.querySelectorAll(".button");
+    const body = document.querySelector("body");
+    buttons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        if (e.target.id === "green") {
+          body.style.backgroundColor = "lightgreen";
+          body.style.color = "black";
+        } else if (e.target.id === "blue") {
+          body.style.backgroundColor = "blue";
+          body.style.color = "white";
+        } else if (e.target.id === "brown") {
+          body.style.backgroundColor = "brown";
+          body.style.color = "white";
+        } else if (e.target.id === "aqua") {
+          body.style.backgroundColor = "aqua";
+          body.style.color = "black";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
