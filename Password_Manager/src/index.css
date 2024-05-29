@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .body{
+    background-image: url('https://portswigger.net/cms/images/23/51/559e-article-230120-password-manager-main-image.png');
+  } */
+
+  @layer components{
+    .mycontainer{
+      @apply container px-40 py-16 mx-auto
+    }
+  }
+
+  
